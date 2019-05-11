@@ -8,9 +8,11 @@
   "license": "MPL-2.0",
   "private": false,
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "start": "ts-node -P tsconfig.node.json ./example/index.ts"
   },
   "devDependencies": {
+    "ts-node": "^8.1.0",
     "typescript": "^3.4.5"
   }
 }
