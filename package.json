@@ -1,0 +1,16 @@
+{
+  "name": "typescript-typed-routes",
+  "version": "0.1.0",
+  "description": "Build typed routes in TypeScript",
+  "main": "src/index.ts",
+  "repository": "git@github.com:pvdstel/typescript-typed-routes",
+  "author": "pvdstel",
+  "license": "MPL-2.0",
+  "private": false,
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  }
+}
