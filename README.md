@@ -8,12 +8,15 @@ This code was designed with [react-router](https://github.com/ReactTraining/reac
 
 ## Code
 
-The `ITypedRoute` interface contains three members: a template string, an empty `parameters` member, and a fill function.
+The `ITypedRoute` interface contains a number of members:
 
 - The template string is the string that should be passed to the `Route` component as the `path` prop.
 - The `paramemeters` member is always `undefined` and should not be used directly. Instead, its type should be used. It is possible to use this type as a generic argument of the `RouteComponentProps` type, so that the routing parameters are typed automatically. For example:
-
     ```ts
     type PropsType = RouteComponentProps<typeof typedRoute.parameters>;
     ```
 - The `fill` function is a function that accepts values corresponding to the provided parameters, optional or not. Arguments should be given in reverse, due to a limitation in how typechecking occurs. To have correct type checking on this method, at least `strictFunctionTypes` should be enabled in the TypeScript project settings.
+- The `args` member is either a string or a function, depending on whether parameters are present in the typed route. If there are no parameters, this field will be equal to the template string. If there are parameters, it is possible to fill them in as follows:
+    ```ts
+    const url = typedRoute.args(param1)(param2)(param3);
+    ```
