@@ -129,8 +129,8 @@ export class TypedRouteBuilder<TParams extends {} = {}, TFillParams extends any[
     private _typedRoute: ITypedRoute<TParams, TFillParams, TArgs>;
 
     /** Initializes a new instance of the {@see TypedRouteBuilder} class. */
-    constructor() {
-        this._typedRoute = createRoute() as any;
+    constructor(typedRoute?: ITypedRoute<TParams, TFillParams, TArgs>) {
+        this._typedRoute = typedRoute || createRoute() as any;
     }
 
     /**

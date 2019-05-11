@@ -69,3 +69,6 @@ console.log(userEditorRoute2.args(params.id)(params.field)(params.redirect)(para
 const simpleRoute = new TypedRouteBuilder().segment('hi').segment('there').typedRoute();
 console.log(simpleRoute.template);
 console.log(simpleRoute.args);
+
+const complicatedRoute = new TypedRouteBuilder(simpleRoute).parameter<{id: number}>('id').typedRoute();
+console.log(complicatedRoute.args(42));
