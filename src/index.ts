@@ -1,5 +1,5 @@
 /** An interface representing a typed route. */
-export interface ITypedRoute<TParams extends {}, TConstructParams extends any[]> {
+export interface ITypedRoute<TParams extends {}, TFillParams extends any[]> {
     /** The template string for this route. */
     template: string;
     /** The parameters this route provides. Will always be `undefined`. Intended usage is `typeof typedRoute.parameters`. */
@@ -9,10 +9,10 @@ export interface ITypedRoute<TParams extends {}, TConstructParams extends any[]>
      * 
      * **Note:** the parameters should be provided in reverse order. This is currently a TypeScript limitation.
      */
-    fill: (...params: TConstructParams) => string;
+    fill: (...params: TFillParams) => string;
 }
 type ExtractParams<T> = T extends ITypedRoute<infer TParams, any> ? TParams : never;
-type ExtractConstructParams<T> = T extends ITypedRoute<any, infer TConstructParams> ? TConstructParams : never;
+type ExtractFillParams<T> = T extends ITypedRoute<any, infer TFillParams> ? TFillParams : never;
 
 /** Creates a typed route object. */
 export function createRoute(): ITypedRoute<{}, []> {
@@ -29,7 +29,7 @@ export function createRoute(): ITypedRoute<{}, []> {
  * @returns A function accepting a typed route object, returning a new typed route object with segment added.
  */
 export function addSegment(segment: string) {
-    return <R extends ITypedRoute<{}, any[]> = ITypedRoute<{}, []>>(route: R): ITypedRoute<ExtractParams<R>, ExtractConstructParams<R>> => {
+    return <R extends ITypedRoute<{}, any[]> = ITypedRoute<{}, []>>(route: R): ITypedRoute<ExtractParams<R>, ExtractFillParams<R>> => {
         return {
             template: `${route.template}/${segment}`,
             parameters: undefined as any,
@@ -44,7 +44,7 @@ export function addSegment(segment: string) {
  * @returns A function accepting a typed route object, returning a new typed route object with the parameter added.
  */
 export function addParameter<P extends object = any>(name: keyof P) {
-    return <R extends ITypedRoute<{}, any[]> = ITypedRoute<{}, []>>(route: R): ITypedRoute<ExtractParams<R> & P, Parameters<(param: P[typeof name], ...params: ExtractConstructParams<R>) => string>> => {
+    return <R extends ITypedRoute<{}, any[]> = ITypedRoute<{}, []>>(route: R): ITypedRoute<ExtractParams<R> & P, Parameters<(param: P[typeof name], ...params: ExtractFillParams<R>) => string>> => {
         return {
             template: `${route.template}/:${name}`,
             parameters: undefined as any,
@@ -59,7 +59,7 @@ export function addParameter<P extends object = any>(name: keyof P) {
  * @returns A function accepting a typed route object, returning a new typed route object with the optional parameter added.
  */
 export function addOptionalParameter<P extends object = any>(name: keyof P) {
-    return <R extends ITypedRoute<{}, any[]> = ITypedRoute<{}, []>>(route: R): ITypedRoute<ExtractParams<R> & Partial<P>, Parameters<(param?: P[typeof name], ...params: ExtractConstructParams<R>) => string>> => {
+    return <R extends ITypedRoute<{}, any[]> = ITypedRoute<{}, []>>(route: R): ITypedRoute<ExtractParams<R> & Partial<P>, Parameters<(param?: P[typeof name], ...params: ExtractFillParams<R>) => string>> => {
         return {
             template: `${route.template}/:${name}?`,
             parameters: undefined as any,
@@ -69,8 +69,8 @@ export function addOptionalParameter<P extends object = any>(name: keyof P) {
 }
 
 /** A builder class for typed routes. */
-export class TypedRouteBuilder<TParams extends {} = {}, TConstructParams extends any[] = []> {
-    private _typedRoute: ITypedRoute<TParams, TConstructParams>;
+export class TypedRouteBuilder<TParams extends {} = {}, TFillParams extends any[] = []> {
+    private _typedRoute: ITypedRoute<TParams, TFillParams>;
 
     /** Initializes a new instance of the {@see TypedRouteBuilder} class. */
     constructor() {
@@ -110,4 +110,4 @@ export class TypedRouteBuilder<TParams extends {} = {}, TConstructParams extends
     }
 }
 type ExtractBuilderParams<T> = T extends TypedRouteBuilder<infer TParams, any> ? TParams : never;
-type ExtractBuilderConstructParams<T> = T extends TypedRouteBuilder<any, infer TConstructParams> ? TConstructParams : never;
+type ExtractBuilderConstructParams<T> = T extends TypedRouteBuilder<any, infer TFillParams> ? TFillParams : never;
