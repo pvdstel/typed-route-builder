@@ -48,7 +48,7 @@ export function addParameter<P extends object = any>(name: keyof P) {
         return {
             template: `${route.template}/:${name}`,
             parameters: undefined as any,
-            fill: (param: P[typeof name], ...params: Parameters<typeof route.fill>) => `${route.fill(params)}/${param}`,
+            fill: (param: P[typeof name], ...params: Parameters<typeof route.fill>) => `${route.fill(...params)}/${param}`,
         };
     };
 }
@@ -63,7 +63,7 @@ export function addOptionalParameter<P extends object = any>(name: keyof P) {
         return {
             template: `${route.template}/:${name}?`,
             parameters: undefined as any,
-            fill: (param?: P[typeof name], ...params: Parameters<typeof route.fill>) => param !== undefined ? `${route.fill(params)}/${param}` : route.fill(...params),
+            fill: (param?: P[typeof name], ...params: Parameters<typeof route.fill>) => param !== undefined ? `${route.fill(...params)}/${param}` : route.fill(...params),
         };
     };
 }
