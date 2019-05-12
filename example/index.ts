@@ -54,21 +54,21 @@ const params: typeof userEditorRoute1.parameters = {
     hash: '#pound'
 };
 
-const argId = userEditorRoute1.args(params.id);
+const argId = userEditorRoute1.filled(params.id);
 const argField = argId(params.field);
 const argRedirect = argField(params.redirect);
 const argHash = argRedirect(params.hash);
 console.log(argHash);
 
-console.log(userEditorRoute1.fill(params.hash, params.redirect, params.field, params.id));
-console.log(userEditorRoute2.fill(params.hash, params.redirect, params.field, params.id));
-console.log(userEditorRoute3_7.fill(params.hash, params.redirect, params.field, params.id));
+console.log(userEditorRoute1.fillAll(params.hash, params.redirect, params.field, params.id));
+console.log(userEditorRoute2.fillAll(params.hash, params.redirect, params.field, params.id));
+console.log(userEditorRoute3_7.fillAll(params.hash, params.redirect, params.field, params.id));
 
-console.log(userEditorRoute2.args(params.id)(params.field)(params.redirect)(params.hash));
+console.log(userEditorRoute2.filled(params.id)(params.field)(params.redirect)(params.hash));
 
 const simpleRoute = new TypedRouteBuilder().segment('hi').segment('there').typedRoute();
 console.log(simpleRoute.template);
-console.log(simpleRoute.args);
+console.log(simpleRoute.filled);
 
 const complicatedRoute = new TypedRouteBuilder(simpleRoute).parameter<{id: number}>('id').typedRoute();
-console.log(complicatedRoute.args(42));
+console.log(complicatedRoute.filled(42));
