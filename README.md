@@ -15,8 +15,8 @@ The `ITypedRoute` interface contains a number of members:
     ```ts
     type PropsType = RouteComponentProps<typeof typedRoute.parameters>;
     ```
-- The `fill` function is a function that accepts values corresponding to the provided parameters, optional or not. Arguments should be given in reverse, due to a limitation in how typechecking occurs. To have correct type checking on this method, at least `strictFunctionTypes` should be enabled in the TypeScript project settings.
-- The `args` member is either a string or a function, depending on whether parameters are present in the typed route. If there are no parameters, this field will be equal to the template string. If there are parameters, it is possible to fill them in as follows:
+- The `fillAll` function is a function that accepts values corresponding to the provided parameters, optional or not. Arguments should be given in reverse, due to a limitation in how typechecking occurs. To have correct type checking on this method, at least `strictFunctionTypes` should be enabled in the TypeScript project settings.
+- The `filled` member is either a string or a function, depending on whether parameters are present in the typed route. If there are no parameters, this field will be equal to the template string. If there are parameters, it is possible to fill them in as follows:
     ```ts
     const url = typedRoute.args(param1)(param2)(param3);
     ```
