@@ -1,12 +1,18 @@
-# Typed Route Builder &middot; [![GitHub license](https://img.shields.io/github/license/pvdstel/typed-route-builder.svg?style=flat-square)](https://github.com/pvdstel/typed-route-builder/blob/master/LICENSE)[![npm version](https://img.shields.io/npm/v/typed-route-builder.svg?style=flat-square)](https://www.npmjs.com/package/typed-route-builder)![npm bundle size](https://img.shields.io/bundlephobia/minzip/typed-route-builder.svg?style=flat-square)
+# Typed Route Builder
+
+[![GitHub license](https://img.shields.io/github/license/pvdstel/typed-route-builder.svg?style=flat-square)](https://github.com/pvdstel/typed-route-builder/blob/master/LICENSE)[![npm version](https://img.shields.io/npm/v/typed-route-builder.svg?style=flat-square)](https://www.npmjs.com/package/typed-route-builder)![npm bundle size](https://img.shields.io/bundlephobia/minzip/typed-route-builder.svg?style=flat-square)
 
 A proof of concept demonstrating that it is possible to automatically build type-safe routes in TypeScript.
+
+## Installing
+
+Run <kbd>yarn add typed-route-builder</kbd> (or <kbd>npm install --save typed-route-builder</kbd>) to install this package as a dependency. TypeScript definitions are included with the package.
 
 ## Background
 
 This code was designed with [react-router](https://github.com/ReactTraining/react-router) in mind. By using any of the functions provided, a path will be generated that is compatible with the `Route` component. This concept was conceived while looking for an alternative way to store application routes for `react-router`, while simultaneously having a way for these routes to be typed.
 
-## Using this project
+## Developing
 
 - Run <kbd>yarn</kbd> to install dependencies.
 - Run <kbd>yarn build</kbd> to build the TypeScript project.
