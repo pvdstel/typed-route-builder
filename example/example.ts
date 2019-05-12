@@ -1,4 +1,4 @@
-import { TypedRouteBuilder, addOptionalParameter, addParameter, addSegment, createRoute } from '../src';
+import { TypedRouteBuilder, addOptionalParameter, addParameter, addSegment, createTypedRoute } from '../src';
 
 /**
  * This example describes a route to the user editor,
@@ -29,7 +29,7 @@ const userEditorRoute2 = addOptionalParameter<{ hash: string }>('hash')(
                 addParameter<{ id: number }>('id')(
                     addSegment('users')(
                         addSegment('2-manage')(
-                            createRoute()
+                            createTypedRoute()
                         )
                     )
                 )
@@ -38,7 +38,7 @@ const userEditorRoute2 = addOptionalParameter<{ hash: string }>('hash')(
     )
 );
 
-const userEditorRoute3_0 = createRoute();
+const userEditorRoute3_0 = createTypedRoute();
 const userEditorRoute3_1 = addSegment('3-manage')(userEditorRoute3_0);
 const userEditorRoute3_2 = addSegment('users')(userEditorRoute3_1);
 const userEditorRoute3_3 = addParameter<{ id: number }>('id')(userEditorRoute3_2);
@@ -66,7 +66,7 @@ console.log(userEditorRoute3_7.fillAll(params.hash, params.redirect, params.fiel
 
 console.log(userEditorRoute2.filled(params.id)(params.field)(params.redirect)(params.hash));
 
-const rootRoute = createRoute('/');
+const rootRoute = createTypedRoute('/');
 console.log(rootRoute.template);
 console.log(rootRoute.filled);
 

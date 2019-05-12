@@ -27,7 +27,7 @@ export interface ITypedRoute<TParams extends {}, TFillAllParams extends any[], T
  * Creates a typed route object.
  * @param path The path to start the route with. Defaults to the empty string.
  */
-export function createRoute(path: string = ''): ITypedRoute<{}, [], string> {
+export function createTypedRoute(path: string = ''): ITypedRoute<{}, [], string> {
     return {
         template: path,
         parameters: undefined as any,
@@ -130,7 +130,7 @@ export class TypedRouteBuilder<TParams extends {} = {}, TFillParams extends any[
 
     /** Initializes a new instance of the {@see TypedRouteBuilder} class. */
     constructor(typedRoute?: ITypedRoute<TParams, TFillParams, TArgs>) {
-        this._typedRoute = typedRoute || createRoute() as any;
+        this._typedRoute = typedRoute || createTypedRoute() as any;
     }
 
     /**

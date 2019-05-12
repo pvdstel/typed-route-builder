@@ -31,9 +31,9 @@ The `ITypedRoute` interface contains a number of members:
 
 There are several functions that create or update `ITypedRoute` objects. These functions do not mutate the objects passed into them.
 
-- `createRoute` constructs a route object. It has one optional parameter, which can be used to define a base path. This parameter should not have a trailing slash.
+- `createTypedRoute` constructs a route object. It has one optional parameter, which can be used to define a base path. This parameter should not have a trailing slash.
     ```ts
-    const route = createRoute();
+    const route = createTypedRoute();
     ```
 - `addSegment` accepts one parameter, the segment to add. It returns a function that accepts an `ITypedRoute` object and returns a new `ITypedRoute` with the segment added.
     ```ts
