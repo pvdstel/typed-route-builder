@@ -29,6 +29,8 @@ The `ITypedRoute` interface contains a number of members:
     const url = typedRoute.filled(param1)(param2)(param3);
     ```
 
+### Functions
+
 There are several functions that create or update `ITypedRoute` objects. These functions do not mutate the objects passed into them.
 
 - `createTypedRoute` constructs a route object. It has one optional parameter, which can be used to define a base path. This parameter should not have a trailing slash.
@@ -63,6 +65,8 @@ console.log(withOptionalParameter.fillAll('password', 42));
 console.log(withOptionalParameter.filled(42)('password'));
 // /users/42/password
 ```
+
+### Builder
 
 This entire API is wrapped in a builder class, `TypedRouteBuilder`, which can be used as follows:
 
