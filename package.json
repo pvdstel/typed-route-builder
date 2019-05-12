@@ -2,11 +2,14 @@
   "name": "typed-route-builder",
   "version": "0.1.0",
   "description": "Build typed routes in TypeScript",
-  "main": "src/index.ts",
+  "main": "es/index.js",
   "repository": "git@github.com:pvdstel/typescript-typed-routes",
   "author": "pvdstel",
   "license": "MPL-2.0",
   "private": false,
+  "files": [
+    "es/**/*"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "ts-node -P tsconfig.node.json ./example/example.ts",
