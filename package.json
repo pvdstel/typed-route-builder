@@ -9,9 +9,14 @@
   "private": false,
   "scripts": {
     "build": "tsc",
-    "start": "ts-node -P tsconfig.node.json ./example/example.ts"
+    "start": "ts-node -P tsconfig.node.json ./example/example.ts",
+    "test": "mocha -r ./test/setup.js test/**/*.test.ts"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
     "ts-node": "^8.1.0",
     "typescript": "^3.4.5"
   }
