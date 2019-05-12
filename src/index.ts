@@ -168,7 +168,7 @@ export class TypedRouteBuilder<TParams extends {} = {}, TFillParams extends any[
         }
 
     /** Gets the typed route instance. */
-    public typedRoute() {
+    public build() {
         return this._typedRoute;
     }
 }

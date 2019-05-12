@@ -16,7 +16,7 @@ const userEditorRoute1 = new TypedRouteBuilder()
     .parameter<{ field: string }>('field')
     .optionalParameter<{ redirect: string }>('redirect')
     .optionalParameter<{ hash: string }>('hash')
-    .typedRoute();
+    .build();
 
 console.log('Template:');
 console.log('\t' + userEditorRoute1.template);
@@ -66,9 +66,9 @@ console.log(userEditorRoute3_7.fillAll(params.hash, params.redirect, params.fiel
 
 console.log(userEditorRoute2.filled(params.id)(params.field)(params.redirect)(params.hash));
 
-const simpleRoute = new TypedRouteBuilder().segment('hi').segment('there').typedRoute();
+const simpleRoute = new TypedRouteBuilder().segment('hi').segment('there').build();
 console.log(simpleRoute.template);
 console.log(simpleRoute.filled);
 
-const complicatedRoute = new TypedRouteBuilder(simpleRoute).parameter<{id: number}>('id').typedRoute();
+const complicatedRoute = new TypedRouteBuilder(simpleRoute).parameter<{id: number}>('id').build();
 console.log(complicatedRoute.filled(42));
