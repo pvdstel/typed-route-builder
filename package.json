@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "build": "tsc",
-    "start": "ts-node -P tsconfig.node.json ./example/index.ts"
+    "start": "ts-node -P tsconfig.node.json ./example/example.ts"
   },
   "devDependencies": {
     "ts-node": "^8.1.0",
