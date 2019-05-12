@@ -66,6 +66,10 @@ console.log(userEditorRoute3_7.fillAll(params.hash, params.redirect, params.fiel
 
 console.log(userEditorRoute2.filled(params.id)(params.field)(params.redirect)(params.hash));
 
+const rootRoute = createRoute('/');
+console.log(rootRoute.template);
+console.log(rootRoute.filled);
+
 const simpleRoute = new TypedRouteBuilder().segment('hi').segment('there').build();
 console.log(simpleRoute.template);
 console.log(simpleRoute.filled);

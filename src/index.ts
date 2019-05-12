@@ -23,13 +23,16 @@ export interface ITypedRoute<TParams extends {}, TFillAllParams extends any[], T
     filled: TFilled;
 }
 
-/** Creates a typed route object. */
-export function createRoute(): ITypedRoute<{}, [], string> {
+/**
+ * Creates a typed route object.
+ * @param path The path to start the route with. Defaults to the empty string.
+ */
+export function createRoute(path: string = ''): ITypedRoute<{}, [], string> {
     return {
-        template: '',
+        template: path,
         parameters: undefined as any,
-        fillAll: () => '',
-        filled: '',
+        fillAll: () => path,
+        filled: path,
     };
 }
 
