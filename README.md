@@ -1,4 +1,4 @@
-# Typed route builder
+# Typed Route Builder &middot; [![GitHub license](https://img.shields.io/github/license/pvdstel/typed-route-builder.svg?style=flat-square)](https://github.com/pvdstel/typed-route-builder/blob/master/LICENSE)[![npm version](https://img.shields.io/npm/v/typed-route-builder.svg?style=flat-square)](https://www.npmjs.com/package/typed-route-builder)![npm bundle size](https://img.shields.io/bundlephobia/minzip/typed-route-builder.svg?style=flat-square)
 
 A proof of concept demonstrating that it is possible to automatically build type-safe routes in TypeScript.
 
