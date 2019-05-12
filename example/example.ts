@@ -1,4 +1,4 @@
-import { TypedRouteBuilder, addOptionalParameter, addParameter, addSegment, createRoute } from "../src";
+import { TypedRouteBuilder, addOptionalParameter, addParameter, addSegment, createRoute } from '../src';
 
 /**
  * This example describes a route to the user editor,
