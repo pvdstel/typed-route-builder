@@ -1,4 +1,4 @@
-# TypeScript typed routes
+# Typed route builder
 
 A proof of concept demonstrating that it is possible to automatically build type-safe routes in TypeScript.
 

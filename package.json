@@ -1,5 +1,5 @@
 {
-  "name": "typescript-typed-routes",
+  "name": "typed-route-builder",
   "version": "0.1.0",
   "description": "Build typed routes in TypeScript",
   "main": "src/index.ts",
@@ -12,6 +12,7 @@
     "start": "ts-node -P tsconfig.node.json ./example/example.ts",
     "test": "mocha -r ./test/setup.js test/**/*.test.ts"
   },
+  "sideEffects": false,
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
