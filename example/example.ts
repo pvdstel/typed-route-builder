@@ -60,10 +60,6 @@ const argRedirect = argField(params.redirect);
 const argHash = argRedirect(params.hash);
 console.log(argHash);
 
-console.log(userEditorRoute1.fillAll(params.hash, params.redirect, params.field, params.id));
-console.log(userEditorRoute2.fillAll(params.hash, params.redirect, params.field, params.id));
-console.log(userEditorRoute3_7.fillAll(params.hash, params.redirect, params.field, params.id));
-
 console.log(userEditorRoute2.filled(params.id)(params.field)(params.redirect)(params.hash));
 
 const rootRoute = createTypedRoute('/');
