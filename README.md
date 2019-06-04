@@ -29,9 +29,9 @@ The `ITypedRoute` interface contains a number of members:
     ```ts
     type PropsType = RouteComponentProps<typeof typedRoute.parameters>;
     ```
-- The `filled` member is either a string or a function, depending on whether parameters are present in the typed route. If there are no parameters, this field will be equal to the template string. If there are parameters, it is possible to fill them in as follows:
+- The `fill` member is either a string or a function, depending on whether parameters are present in the typed route. If there are no parameters, this field will be equal to the template string. If there are parameters, it is possible to fill them in as follows:
     ```ts
-    const url = typedRoute.filled(param1)(param2)(param3);
+    const url = typedRoute.fill(param1)(param2)(param3);
     ```
 
 ### Functions
@@ -64,7 +64,7 @@ console.log(withOptionalParameter.template);
 console.log(withOptionalParameter.parameters);
 // undefined
 
-console.log(withOptionalParameter.filled(42)('password'));
+console.log(withOptionalParameter.fill(42)('password'));
 // /users/42/password
 ```
 
