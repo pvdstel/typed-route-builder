@@ -23,9 +23,7 @@ describe('TypedRouteBuilder', () => {
 
         expect(userEditorRoute.template).to.equal('/manage/users/:id/edit/:field/:redirect?/:hash?');
         expect(userEditorRoute.parameters).to.equal(undefined);
-        expect(userEditorRoute.fillAll(values.hash, values.redirect, values.field, values.id))
-            .to.equal(`/manage/users/${values.id}/edit/${values.field}/${values.hash}`);
-        expect(userEditorRoute.filled(values.id)(values.field)(values.redirect)(values.hash))
+        expect(userEditorRoute.fill(values.id)(values.field)(values.redirect)(values.hash))
             .to.equal(`/manage/users/${values.id}/edit/${values.field}/${values.hash}`);
     });
 });
