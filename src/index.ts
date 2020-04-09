@@ -125,7 +125,7 @@ export class TypedRouteBuilder<TParams extends {} = {}, TArgs extends FillType =
      * @param segment The segment to add.
      */
     public segment: (segment: string) => this = segment => {
-        this._typedRoute = addSegment(segment)(this._typedRoute as any) as any;
+        this._typedRoute = addSegment(segment)(this._typedRoute);
         return this;
     }
 
@@ -138,7 +138,7 @@ export class TypedRouteBuilder<TParams extends {} = {}, TArgs extends FillType =
             ExtractParams<this> & Ps,
             FillExpander<ExtractFill<this>, Ps[typeof name]>
         > = name => {
-            this._typedRoute = addParameter(name)(this._typedRoute as any) as any;
+            this._typedRoute = addParameter(name)(this._typedRoute) as any;
             return this as any;
         }
 
@@ -151,7 +151,7 @@ export class TypedRouteBuilder<TParams extends {} = {}, TArgs extends FillType =
             ExtractParams<this> & Partial<Ps>,
             FillExpander<ExtractFill<this>, Ps[typeof name] | undefined>
         > = name => {
-            this._typedRoute = addOptionalParameter(name)(this._typedRoute as any) as any;
+            this._typedRoute = addOptionalParameter(name)(this._typedRoute) as any;
             return this as any;
         }
 
