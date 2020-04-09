@@ -7,22 +7,22 @@ describe('TypedRouteBuilder', () => {
         const userEditorRoute = new TypedRouteBuilder()
             .segment('manage')
             .segment('users')
-            .parameter('id')
+            .param('id')
             .segment('edit')
-            .parameter('field')
-            .optionalParameter('redirect')
-            .optionalParameter('hash')
+            .param('field')
+            .optionalParam('redirect')
+            .optionalParam('hash')
             .build();
 
-        const values: typeof userEditorRoute.parameters = {
+        const values: typeof userEditorRoute.params = {
             id: '5',
             field: 'password',
             redirect: undefined,
             hash: 'element-hash',
         };
 
-        expect(userEditorRoute.template).to.equal('/manage/users/:id/edit/:field/:redirect?/:hash?');
-        expect(userEditorRoute.parameters).to.equal(undefined);
+        expect(userEditorRoute.path).to.equal('/manage/users/:id/edit/:field/:redirect?/:hash?');
+        expect(userEditorRoute.params).to.equal(undefined);
         expect(userEditorRoute.fill(values.id)(values.field)(values.redirect)(values.hash))
             .to.equal(`/manage/users/${values.id}/edit/${values.field}/${values.hash}`);
     });
