@@ -46,13 +46,13 @@ There are several functions that create or update `ITypedRoute` objects. These f
     ```ts
     const withSegment = addSegment('users')(route);
     ```
-- `addParameter` accepts one type parameter and one parameter. The type parameter defines how the parameters type should be extened, whereas the function parameter passes the name of this parameter so that it can be used correctly. It returns a function that accepts an `ITypedRoute` object and returns a new `ITypedRoute` with the parameter added.
+- `addParameter` accepts one parameter. It returns a function that accepts an `ITypedRoute` object and returns a new `ITypedRoute` with the parameter added. The parameter type is always `string`.
     ```ts
-    const withParameter = addParameter<{ id: number }>('id')(withSegment);
+    const withParameter = addParameter('id')(withSegment);
     ```
-- `addOptionalParameter` accepts one type parameter and one parameter. It does roughly the same as `addParameter`, except that the value can now be optional (and thus `undefined`). It returns a function that accepts an `ITypedRoute` object and returns a new `ITypedRoute` with the parameter added.
+- `addOptionalParameter` accepts one parameter. It does roughly the same as `addParameter`, except that the value can now be optional (and thus `undefined`). It returns a function that accepts an `ITypedRoute` object and returns a new `ITypedRoute` with the parameter added. The parameter type is always `string?`.
     ```ts
-    const withOptionalParameter = addParameter<{ tab: string }>('tab')(withParameter);
+    const withOptionalParameter = addParameter('tab')(withParameter);
     ```
 
 After executing the above lines of code, we will see the following output:
@@ -75,8 +75,8 @@ This entire API is wrapped in a builder class, `TypedRouteBuilder`, which can be
 ```ts
 const builtRoute = new TypedRouteBuilder()
     .segment('users')
-    .parameter<{ id: number }>('id')
-    .optionalParameter<{ tab: string }>('tab')
+    .parameter('id')
+    .optionalParameter('tab')
     .build();
 ```
 
