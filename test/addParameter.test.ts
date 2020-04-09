@@ -8,17 +8,17 @@ describe('addParameter', () => {
     it('adds a parameter', () => {
         const value = 'my-test-path';
 
-        const route = addParameter<{ [value]: number }>(value)(base);
+        const route = addParameter(value)(base);
 
         expect(route.template).to.equal('/:' + value);
         expect(route.parameters).to.equal(undefined);
-        expect(route.fill(42)).to.equal('/42');
+        expect(route.fill('42')).to.equal('/42');
     });
     it('adds multiple parameters', () => {
-        const route = addParameter<{ tab: string }>('tab')(addParameter<{ id: number }>('id')(base));
+        const route = addParameter('tab')(addParameter('id')(base));
 
         const values: typeof route.parameters = {
-            id: 5,
+            id: '5',
             tab: 'password',
         };
 

@@ -8,17 +8,17 @@ describe('addOptionalParameter', () => {
     it('adds a parameter', () => {
         const value = 'my-test-path';
 
-        const route = addOptionalParameter<{ [value]: number }>(value)(base);
+        const route = addOptionalParameter(value)(base);
 
         expect(route.template).to.equal('/:' + value + '?');
         expect(route.parameters).to.equal(undefined);
-        expect(route.fill(42)).to.equal('/42');
+        expect(route.fill('42')).to.equal('/42');
     });
     it('adds multiple parameters', () => {
-        const route = addOptionalParameter<{ tab: string }>('tab')(addOptionalParameter<{ id: number }>('id')(base));
+        const route = addOptionalParameter('tab')(addOptionalParameter('id')(base));
 
         const values: typeof route.parameters = {
-            id: 5,
+            id: '5',
             tab: 'password',
         };
 
@@ -27,10 +27,10 @@ describe('addOptionalParameter', () => {
         expect(route.fill(values.id)(values.tab)).to.equal('/5/password');
     });
     it('excludes parameters when they are undefined', () => {
-        const route = addOptionalParameter<{ tab: string }>('tab')(addOptionalParameter<{ id: number }>('id')(base));
+        const route = addOptionalParameter('tab')(addOptionalParameter('id')(base));
 
         const values: typeof route.parameters = {
-            id: 5,
+            id: '5',
             tab: 'password',
         };
 

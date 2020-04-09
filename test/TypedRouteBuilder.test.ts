@@ -7,15 +7,15 @@ describe('TypedRouteBuilder', () => {
         const userEditorRoute = new TypedRouteBuilder()
             .segment('manage')
             .segment('users')
-            .parameter<{ id: number }>('id')
+            .parameter('id')
             .segment('edit')
-            .parameter<{ field: string }>('field')
-            .optionalParameter<{ redirect: string }>('redirect')
-            .optionalParameter<{ hash: string }>('hash')
+            .parameter('field')
+            .optionalParameter('redirect')
+            .optionalParameter('hash')
             .build();
 
         const values: typeof userEditorRoute.parameters = {
-            id: 5,
+            id: '5',
             field: 'password',
             redirect: undefined,
             hash: 'element-hash',
