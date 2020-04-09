@@ -97,10 +97,10 @@ export function addParameter<P extends string = string, Ps extends { [K in P]: s
  * @param name The name of the optional parameter to add.
  * @returns A function accepting a typed route object, returning a new typed route object with the optional parameter added.
  */
-export function addOptionalParameter<P extends string = string, Ps extends { [K in P]: string } = { [K in P]: string }>(name: P) {
+export function addOptionalParameter<P extends string = string, Ps extends { [K in P]?: string } = { [K in P]?: string }>(name: P) {
     return <R extends ITypedRoute<{}, FillType> = ITypedRoute<{}, FillType>>
         (route: R): ITypedRoute<
-            ExtractParams<R> & Partial<Ps>,
+            ExtractParams<R> & Ps,
             FillExpander<ExtractFill<R>, Ps[typeof name] | undefined>
         > => {
         return {
@@ -146,9 +146,9 @@ export class TypedRouteBuilder<TParams extends {} = {}, TArgs extends FillType =
      * Adds an optional to the typed route object.
      * @param name The name of the optional parameter to add.
      */
-    public optionalParameter: <P extends string = string, Ps extends { [K in P]: string } = { [K in P]: string }>
+    public optionalParameter: <P extends string = string, Ps extends { [K in P]?: string } = { [K in P]?: string }>
         (name: P) => TypedRouteBuilder<
-            ExtractParams<this> & Partial<Ps>,
+            ExtractParams<this> & Ps,
             FillExpander<ExtractFill<this>, Ps[typeof name] | undefined>
         > = name => {
             this._typedRoute = addOptionalParameter(name)(this._typedRoute) as any;
