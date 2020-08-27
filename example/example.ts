@@ -47,7 +47,7 @@ const params: typeof userEditorRoute2.params = {
     id: '25',
     field: 'the_field_i_edit',
     redirect: undefined,// 'uri_home{3}',
-    hash: '#pound'
+    hash: '#pound',
 };
 
 const argId = userEditorRoute2.fill(params.id);
@@ -59,7 +59,7 @@ console.log(userEditorRoute2.build(params.id, params.field, params.redirect, par
 
 console.log(userEditorRoute2.fill(params.id)(params.field)(params.redirect)(params.hash));
 console.log(userEditorRoute3_7.fill('1')('2nd')('3rd')('4th'));
-console.log('which must be equal to')
+console.log('which must be equal to');
 console.log(userEditorRoute3_7.build('1', '2nd', '3rd', '4th'));
 
 const rootRoute = createTypedRoute('/');

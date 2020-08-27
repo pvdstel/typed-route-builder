@@ -15,6 +15,7 @@ export interface ITypedRoute<TParams extends {}, TBuild extends any[], TFill ext
     params: TParams;
     /** Gets the template string, where all parameters are filled in using curried functions. */
     fill: TFill;
+    /** Gets the template string, where all parameters are filled in in order. */
     build: (...params: TBuild) => string;
 }
 
@@ -24,7 +25,7 @@ export interface ITypedRoute<TParams extends {}, TBuild extends any[], TFill ext
  */
 export function createTypedRoute(path: string = ''): ITypedRoute<{}, [], string> {
     return {
-        path: path,
+        path,
         params: undefined as any,
         fill: path,
         build: () => path,
@@ -72,7 +73,7 @@ export function addSegment(segment: string) {
                 ? `${route.fill}/${segment}`
                 : (arg: any) => `${(route.fill as (arg: any) => any)(arg)}/${segment}`
             ) as any,
-            build: (...params: ExtractBuild<R>) => `${route.build(...params)}/${segment}`
+            build: (...params: ExtractBuild<R>) => `${route.build(...params)}/${segment}`,
         };
     };
 }
@@ -147,7 +148,7 @@ export class TypedRouteBuilder<TParams extends {} = {}, TBuild extends any[] = [
     public segment: (segment: string) => this = segment => {
         this._typedRoute = addSegment(segment)(this._typedRoute as ITypedRoute<TParams, any[], TArgs>);
         return this;
-    }
+    };
 
     /**
      * Adds a parameter to the typed route object.
@@ -161,7 +162,7 @@ export class TypedRouteBuilder<TParams extends {} = {}, TBuild extends any[] = [
         > = name => {
             this._typedRoute = addParam(name)(this._typedRoute as ITypedRoute<TParams, any[], TArgs>) as any;
             return this as any;
-        }
+        };
 
     /**
      * Adds an optional to the typed route object.
@@ -175,12 +176,10 @@ export class TypedRouteBuilder<TParams extends {} = {}, TBuild extends any[] = [
         > = name => {
             this._typedRoute = addOptionalParam(name)(this._typedRoute as ITypedRoute<TParams, any[], TArgs>) as any;
             return this as any;
-        }
+        };
 
     /** Gets the typed route instance. */
-    public build() {
-        return this._typedRoute;
-    }
+    public build = () => this._typedRoute;
 }
 
 /** Helper type used to obtain the `TParams` generic type argument. */

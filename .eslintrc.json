@@ -1,0 +1,138 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "jsx": true,
+        "useJSXTextNode": true,
+        "sourceType": "module",
+        "project": [
+            "./tsconfig.eslint.json"
+        ]
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "@typescript-eslint/array-type": [
+            "error",
+            {
+                "default": "array"
+            }
+        ],
+        "@typescript-eslint/await-thenable": "error",
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "interface",
+                "format": [
+                    "PascalCase"
+                ],
+                "prefix": [
+                    "I"
+                ]
+            },
+            {
+                "selector": "parameter",
+                "format": [
+                    "camelCase"
+                ],
+                "leadingUnderscore": "allow"
+            },
+            {
+                "selector": "typeLike",
+                "format": [
+                    "PascalCase"
+                ]
+            }
+        ],
+        "@typescript-eslint/no-extra-parens": [
+            "warn",
+            "all"
+        ],
+        "@typescript-eslint/no-unnecessary-qualifier": "error",
+        "@typescript-eslint/no-unnecessary-type-assertion": "error",
+        "@typescript-eslint/no-unnecessary-type-arguments": "error",
+        "@typescript-eslint/no-unused-expressions": "error",
+        "@typescript-eslint/semi": "error",
+        "@typescript-eslint/unified-signatures": "error",
+        "array-callback-return": "error",
+        "arrow-parens": "off",
+        "brace-style": [
+            "error",
+            "1tbs",
+            {
+                "allowSingleLine": true
+            }
+        ],
+        "complexity": [
+            "error",
+            10
+        ],
+        "comma-dangle": [
+            "error",
+            "always-multiline"
+        ],
+        "constructor-super": "error",
+        "curly": "error",
+        "eol-last": "error",
+        "eqeqeq": "error",
+        "max-len": [
+            "error",
+            {
+                "code": 150
+            }
+        ],
+        "no-cond-assign": "error",
+        "no-debugger": "error",
+        "no-duplicate-case": "error",
+        "no-empty": [
+            "error"
+        ],
+        "no-eval": "error",
+        "no-fallthrough": "error",
+        "no-irregular-whitespace": [
+            "error",
+            {
+                "skipStrings": false
+            }
+        ],
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 1
+            }
+        ],
+        "no-redeclare": "error",
+        "no-template-curly-in-string": "error",
+        "no-throw-literal": "error",
+        "no-trailing-spaces": "error",
+        "no-unsafe-finally": "error",
+        "no-var": "error",
+        "object-shorthand": "error",
+        "prefer-const": "error",
+        "jsx-quotes": [
+            "error",
+            "prefer-single"
+        ],
+        "quotes": [
+            "error",
+            "single",
+            {
+                "avoidEscape": true
+            }
+        ],
+        "semi": [
+            "warn",
+            "always"
+        ],
+        "no-extra-semi": "error",
+        "spaced-comment": [
+            "error",
+            "always",
+            {
+                "markers": [
+                    "/"
+                ]
+            }
+        ]
+    }
+}
