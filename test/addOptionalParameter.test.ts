@@ -13,6 +13,7 @@ describe('addOptionalParameter', () => {
         expect(route.path).to.equal('/:' + value + '?');
         expect(route.params).to.equal(undefined);
         expect(route.fill('42')).to.equal('/42');
+        expect(route.build('42')).to.equal('/42');
     });
     it('adds multiple parameters', () => {
         const route = addOptionalParam('tab')(addOptionalParam('id')(base));
@@ -25,6 +26,7 @@ describe('addOptionalParameter', () => {
         expect(route.path).to.equal('/:id?/:tab?');
         expect(route.params).to.equal(undefined);
         expect(route.fill(values.id)(values.tab)).to.equal('/5/password');
+        expect(route.build(values.id, values.tab)).to.equal('/5/password');
     });
     it('excludes parameters when they are undefined', () => {
         const route = addOptionalParam('tab')(addOptionalParam('id')(base));
@@ -37,6 +39,7 @@ describe('addOptionalParameter', () => {
         expect(route.path).to.equal('/:id?/:tab?');
         expect(route.params).to.equal(undefined);
         expect(route.fill(values.id)(undefined)).to.equal('/5');
-        expect(route.fill(undefined)(values.tab)).to.equal('/password');
+        expect(route.build(values.id, undefined)).to.equal('/5');
+        expect(route.build(undefined, values.tab)).to.equal('/password');
     });
 });

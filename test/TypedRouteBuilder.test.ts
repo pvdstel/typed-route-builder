@@ -25,5 +25,7 @@ describe('TypedRouteBuilder', () => {
         expect(userEditorRoute.params).to.equal(undefined);
         expect(userEditorRoute.fill(values.id)(values.field)(values.redirect)(values.hash))
             .to.equal(`/manage/users/${values.id}/edit/${values.field}/${values.hash}`);
+        expect(userEditorRoute.build(values.id, values.field, values.redirect, values.hash))
+            .to.equal(`/manage/users/${values.id}/edit/${values.field}/${values.hash}`);
     });
 });

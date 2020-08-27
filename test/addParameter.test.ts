@@ -13,6 +13,7 @@ describe('addParameter', () => {
         expect(route.path).to.equal('/:' + value);
         expect(route.params).to.equal(undefined);
         expect(route.fill('42')).to.equal('/42');
+        expect(route.build('42')).to.equal('/42');
     });
     it('adds multiple parameters', () => {
         const route = addParam('tab')(addParam('id')(base));
@@ -25,5 +26,6 @@ describe('addParameter', () => {
         expect(route.path).to.equal('/:id/:tab');
         expect(route.params).to.equal(undefined);
         expect(route.fill(values.id)(values.tab)).to.equal(`/${values.id}/${values.tab}`);
+        expect(route.build(values.id, values.tab)).to.equal(`/${values.id}/${values.tab}`);
     });
 });

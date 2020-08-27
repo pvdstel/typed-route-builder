@@ -11,6 +11,7 @@ describe('createTypedRoute', () => {
         expect(route.path).to.equal(value);
         expect(route.params).to.equal(undefined);
         expect(route.fill).to.equal(value);
+        expect(route.build()).to.equal(value);
     });
     it('creates a typed route with the given parameter', () => {
         const value = 'my-test-path';
@@ -19,6 +20,6 @@ describe('createTypedRoute', () => {
 
         expect(route.path).to.equal(value);
         expect(route.params).to.equal(undefined);
-        expect(route.fill).to.equal(value);
+        expect(route.build()).to.equal(value);
     });
 });

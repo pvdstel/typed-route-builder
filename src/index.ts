@@ -8,24 +8,26 @@ type FillExpander<TFillFn, TAdding> = (TFillFn extends (arg: infer TFillFnParams
 );
 
 /** An interface representing a typed route. */
-export interface ITypedRoute<TParams extends {}, TFill extends FillType> {
+export interface ITypedRoute<TParams extends {}, TBuild extends any[], TFill extends FillType> {
     /** The template string for this route. */
     path: string;
     /** The parameters this route provides. Will always be `undefined`. Intended usage is `typeof typedRoute.parameters`. */
     params: TParams;
     /** Gets the template string, where all parameters are filled in using curried functions. */
     fill: TFill;
+    build: (...params: TBuild) => string;
 }
 
 /**
  * Creates a typed route object.
  * @param path The path to start the route with. Defaults to the empty string.
  */
-export function createTypedRoute(path: string = ''): ITypedRoute<{}, string> {
+export function createTypedRoute(path: string = ''): ITypedRoute<{}, [], string> {
     return {
         path: path,
         params: undefined as any,
         fill: path,
+        build: () => path,
     };
 }
 
@@ -56,9 +58,10 @@ function makeFillCurry<R extends FillType>(routeArgs: R): any {
  * @returns A function accepting a typed route object, returning a new typed route object with segment added.
  */
 export function addSegment(segment: string) {
-    return <R extends ITypedRoute<{}, FillType> = ITypedRoute<{}, FillType>>
+    return <R extends ITypedRoute<{}, any[], FillType> = ITypedRoute<{}, [], FillType>>
         (route: R): ITypedRoute<
             ExtractParams<R>,
+            ExtractBuild<R>,
             ExtractFill<R>
         > => {
         // For segments, `makeFillCurry` is not necessary as it can expand right away.
@@ -69,6 +72,7 @@ export function addSegment(segment: string) {
                 ? `${route.fill}/${segment}`
                 : (arg: any) => `${(route.fill as (arg: any) => any)(arg)}/${segment}`
             ) as any,
+            build: (...params: ExtractBuild<R>) => `${route.build(...params)}/${segment}`
         };
     };
 }
@@ -79,15 +83,22 @@ export function addSegment(segment: string) {
  * @returns A function accepting a typed route object, returning a new typed route object with the parameter added.
  */
 export function addParam<P extends string = string, Ps extends { [K in P]: string } = { [K in P]: string }>(name: P) {
-    return <R extends ITypedRoute<{}, FillType> = ITypedRoute<{}, FillType>>
+    return <R extends ITypedRoute<{}, any[], FillType> = ITypedRoute<{}, [], FillType>>
         (route: R): ITypedRoute<
             ExtractParams<R> & Ps,
+            [...ExtractBuild<R>, Ps[typeof name]],
             FillExpander<ExtractFill<R>, Ps[typeof name]>
         > => {
         return {
             path: `${route.path}/:${name}`,
             params: undefined as any,
             fill: makeFillCurry(route.fill),
+            build: (...params: [...ExtractBuild<R>, Ps[typeof name]]) => {
+                const param = params[params.length - 1];
+                const restParams = params.slice(0, -1);
+
+                return `${route.build(...restParams)}/${param}`;
+            },
         };
     };
 }
@@ -98,25 +109,34 @@ export function addParam<P extends string = string, Ps extends { [K in P]: strin
  * @returns A function accepting a typed route object, returning a new typed route object with the optional parameter added.
  */
 export function addOptionalParam<P extends string = string, Ps extends { [K in P]?: string } = { [K in P]?: string }>(name: P) {
-    return <R extends ITypedRoute<{}, FillType> = ITypedRoute<{}, FillType>>
+    return <R extends ITypedRoute<{}, any[], FillType> = ITypedRoute<{}, [], FillType>>
         (route: R): ITypedRoute<
             ExtractParams<R> & Ps,
+            [...ExtractBuild<R>, Ps[typeof name] | undefined],
             FillExpander<ExtractFill<R>, Ps[typeof name] | undefined>
         > => {
         return {
             path: `${route.path}/:${name}?`,
             params: undefined as any,
             fill: makeFillCurry(route.fill),
+            build: (...params: [...ExtractBuild<R>, Ps[typeof name] | undefined]) => {
+                const param = params[params.length - 1];
+                const restParams = params.slice(0, -1);
+
+                return param !== undefined
+                    ? `${route.build(...restParams)}/${param}`
+                    : route.build(...restParams);
+            },
         };
     };
 }
 
 /** A builder class for typed routes. */
-export class TypedRouteBuilder<TParams extends {} = {}, TArgs extends FillType = string> {
-    private _typedRoute: ITypedRoute<TParams, TArgs>;
+export class TypedRouteBuilder<TParams extends {} = {}, TBuild extends any[] = [], TArgs extends FillType = string> {
+    private _typedRoute: ITypedRoute<TParams, TBuild, TArgs>;
 
     /** Initializes a new instance of the {@see TypedRouteBuilder} class. */
-    constructor(typedRoute?: ITypedRoute<TParams, TArgs>) {
+    constructor(typedRoute?: ITypedRoute<TParams, TBuild, TArgs>) {
         this._typedRoute = typedRoute || createTypedRoute() as any;
     }
 
@@ -125,7 +145,7 @@ export class TypedRouteBuilder<TParams extends {} = {}, TArgs extends FillType =
      * @param segment The segment to add.
      */
     public segment: (segment: string) => this = segment => {
-        this._typedRoute = addSegment(segment)(this._typedRoute);
+        this._typedRoute = addSegment(segment)(this._typedRoute as ITypedRoute<TParams, any[], TArgs>);
         return this;
     }
 
@@ -136,9 +156,10 @@ export class TypedRouteBuilder<TParams extends {} = {}, TArgs extends FillType =
     public param: <P extends string = string, Ps extends { [K in P]: string } = { [K in P]: string }>
         (name: P) => TypedRouteBuilder<
             ExtractParams<this> & Ps,
+            [...ExtractBuild<this>, Ps[typeof name]],
             FillExpander<ExtractFill<this>, Ps[typeof name]>
         > = name => {
-            this._typedRoute = addParam(name)(this._typedRoute) as any;
+            this._typedRoute = addParam(name)(this._typedRoute as ITypedRoute<TParams, any[], TArgs>) as any;
             return this as any;
         }
 
@@ -149,9 +170,10 @@ export class TypedRouteBuilder<TParams extends {} = {}, TArgs extends FillType =
     public optionalParam: <P extends string = string, Ps extends { [K in P]?: string } = { [K in P]?: string }>
         (name: P) => TypedRouteBuilder<
             ExtractParams<this> & Ps,
+            [...ExtractBuild<this>, Ps[typeof name] | undefined],
             FillExpander<ExtractFill<this>, Ps[typeof name] | undefined>
         > = name => {
-            this._typedRoute = addOptionalParam(name)(this._typedRoute) as any;
+            this._typedRoute = addOptionalParam(name)(this._typedRoute as ITypedRoute<TParams, any[], TArgs>) as any;
             return this as any;
         }
 
@@ -162,17 +184,25 @@ export class TypedRouteBuilder<TParams extends {} = {}, TArgs extends FillType =
 }
 
 /** Helper type used to obtain the `TParams` generic type argument. */
-type ExtractParams<T> = (T extends ITypedRoute<infer TParams, any>
+type ExtractParams<T> = (T extends ITypedRoute<infer TParams, any, any>
     ? TParams
-    : (T extends TypedRouteBuilder<infer TParams, any>
+    : (T extends TypedRouteBuilder<infer TParams, any, any>
         ? TParams
         : never
     )
 );
+/** Helper type used to obtain the `TWith` generic type argument. */
+type ExtractBuild<T> = (T extends ITypedRoute<any, infer TBuild, any>
+    ? TBuild
+    : (T extends TypedRouteBuilder<any, infer TBuild, any>
+        ? TBuild
+        : never
+    )
+);
 /** Helper type used to obtain the `TFill` generic type argument. */
-type ExtractFill<T> = (T extends ITypedRoute<any, infer TFill>
+type ExtractFill<T> = (T extends ITypedRoute<any, any, infer TFill>
     ? TFill
-    : (T extends TypedRouteBuilder<any, infer TFill>
+    : (T extends TypedRouteBuilder<any, any, infer TFill>
         ? TFill
         : never
     )

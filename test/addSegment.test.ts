@@ -13,6 +13,7 @@ describe('addSegment', () => {
         expect(route.path).to.equal('/' + value);
         expect(route.params).to.equal(undefined);
         expect(route.fill).to.equal('/' + value);
+        expect(route.build()).to.equal('/' + value);
     });
     it('adds multiple segments', () => {
         const values = ['manage', 'policies', 'built-in'];
@@ -22,5 +23,6 @@ describe('addSegment', () => {
         expect(route.path).to.equal('/' + values.join('/'));
         expect(route.params).to.equal(undefined);
         expect(route.fill).to.equal('/' + values.join('/'));
+        expect(route.build()).to.equal('/' + values.join('/'));
     });
 });

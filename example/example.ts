@@ -55,9 +55,12 @@ const argField = argId(params.field);
 const argRedirect = argField(params.redirect);
 const argHash = argRedirect(params.hash);
 console.log(argHash);
+console.log(userEditorRoute2.build(params.id, params.field, params.redirect, params.hash));
 
 console.log(userEditorRoute2.fill(params.id)(params.field)(params.redirect)(params.hash));
 console.log(userEditorRoute3_7.fill('1')('2nd')('3rd')('4th'));
+console.log('which must be equal to')
+console.log(userEditorRoute3_7.build('1', '2nd', '3rd', '4th'));
 
 const rootRoute = createTypedRoute('/');
 console.log(rootRoute.path);
@@ -66,6 +69,7 @@ console.log(rootRoute.fill);
 const simpleRoute = new TypedRouteBuilder().segment('hi').segment('there').build();
 console.log(simpleRoute.path);
 console.log(simpleRoute.fill);
+console.log(simpleRoute.build());
 
 const complicatedRoute = new TypedRouteBuilder(simpleRoute).param('id').build();
 console.log(complicatedRoute.fill('42'));
