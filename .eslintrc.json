@@ -8,6 +8,9 @@
             "./tsconfig.eslint.json"
         ]
     },
+    "ignorePatterns": [
+        "es/"
+    ],
     "plugins": [
         "@typescript-eslint"
     ],
